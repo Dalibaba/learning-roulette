@@ -1,17 +1,18 @@
 <template>
 <b-container>
+  <h2>Choose the Language</h2>
   <b-row align-v="center">
     <b-col>
-       <router-link to="/roulette">
+       <a href="/learning-roulette" >
         <img src="../assets/images/english_flag.webp"
         width="300" height="200"/>
-        </router-link> |
+       </a>
     </b-col>
     <b-col>
-      <router-link to="/roulette">
+      <a href="/learning-roulette" >
       <img src="../assets/images/spanish_flag.webp"
       width="300" height="200"/>
-      </router-link> |
+      </a>|
     </b-col>
   </b-row>
 </b-container>
