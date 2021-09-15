@@ -2,19 +2,34 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv")
 const app = express()
+const cors = require('cors');
+
+// Import routes
+//import rouletteRoute from './route/roulette';
+const waitingRoomRoute = require('./route/waitingRoom')
+
 //create server based on express server
 const server = require('http').Server(app)
 //pass server to socketio
 const io = require('socket.io')(server)
 // create individual uuid
 const {v4: uuidV4} = require('uuid')
+
 //dotenv
 dotenv.config();
+
+//middleware , enable CORS
+app.use(cors());
+app.use(express.json());
 
 //view engine
 app.set('view engine', 'ejs')
 //set up static folder
 app.use(express.static('public'))
+
+// routes
+app.use('/api/v1', waitingRoomRoute);
+
 
 //create new room
 app.get('/', (req, res) => {
@@ -57,6 +72,8 @@ db.once('open', () => {
     /* eslint-disable-next-line */
     console.log('Successfully connected to database!');
   });
-  
 
-server.listen(3000)
+// Start server
+server.listen(process.env.SERVER_PORT, () => {
+    console.log(`API server running on port ${process.env.SERVER_PORT}`);
+  });
