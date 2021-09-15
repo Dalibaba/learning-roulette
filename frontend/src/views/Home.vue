@@ -3,27 +3,35 @@
   <h2>Choose the Language</h2>
   <b-row align-v="center">
     <b-col>
-       <a href="/waitingroom" >
-        <img src="../assets/images/english_flag.webp"
+        <img @click="onClickLanguage(0)" src="../assets/images/english_flag.webp"
         width="300" height="200"/>
-       </a>
     </b-col>
     <b-col>
-      <a href="/waitingroom" >
-      <img src="../assets/images/spanish_flag.webp"
+      <img @click="onClickLanguage(1)" src="../assets/images/spanish_flag.webp"
       width="300" height="200"/>
-      </a>|
     </b-col>
   </b-row>
 </b-container>
 </template>
 
 <script>
-// @ is an alias to /src
+const languagesJSON = require('../assets/languageMapping.json');
 
 export default {
   name: "Home",
   components: {
   },
+   methods: {
+    onClickLanguage(num) {
+      let language = "";
+      //map number to language from json
+      for (let [key, value] of Object.entries(languagesJSON)) {
+            if (value == num) {
+            language = key
+          }
+        }
+      this.$router.push({path: 'waitingroom',  query: {language: language}})
+    },
+}
 };
 </script>

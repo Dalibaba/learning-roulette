@@ -19,20 +19,20 @@ import axios from 'axios';
 export default {
   
   created() {
+    //console.log(this.query.language);
     this.joinWaitingRoom();
   },
 
   methods: {
     async joinWaitingRoom() {
       try {
-        const response = await axios.post(process.env.VUE_APP_API_URL + '/waitingRoom', {
+        await axios.post(process.env.VUE_APP_API_URL + '/waitingRoom', {
           name: "test",
           language: "english",
         });
-        console.log(response)
       } catch (error) {
         console.log(error)
-}
+      }
     },
   },
 };
