@@ -16,10 +16,13 @@
 
 <script>
 import axios from 'axios';
+
+//define random UserNames for testing
+const names = ["Chris", "Michelle", "Mark", "Joe", "Sandra"]
+
 export default {
   
   created() {
-    //console.log(this.query.language);
     this.joinWaitingRoom();
   },
 
@@ -27,13 +30,19 @@ export default {
     async joinWaitingRoom() {
       try {
         await axios.post(process.env.VUE_APP_API_URL + '/waitingRoom', {
-          name: "test",
-          language: "english",
+          name: names[this.getRandomInt(0, names.length-1)],
+          language: this.$route.query.language,
         });
       } catch (error) {
         console.log(error)
       }
     },
+  
+ getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
   },
 };
 </script>
