@@ -1,17 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv")
+const http = require('http')
 const app = express()
 const cors = require('cors');
+const socketio = require("socket.io");
+
+
+//create http server based on express server
+const server = http.createServer(app);
 
 // Import routes
 //import rouletteRoute from './route/roulette';
 const waitingRoomRoute = require('./route/waitingRoom')
 
-//create server based on express server
-const server = require('http').Server(app)
-//pass server to socketio
-const io = require('socket.io')(server)
 // create individual uuid
 const {v4: uuidV4} = require('uuid')
 
@@ -22,12 +24,21 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
+//pass server to socketio
+const io = socketio(server, {
+  allowEIO3: true,
+  cors: {
+      origin: true,
+      credentials: true
+  },
+});
+
 //view engine
 app.set('view engine', 'ejs')
 //set up static folder
 app.use(express.static('public'))
 
-// routes
+// define routes
 app.use('/api/v1', waitingRoomRoute);
 
 
@@ -42,6 +53,10 @@ app.get('/:room', (req, res) => {
     res.render('room', {roomId: req.params.room})
 }
 )
+
+//Check socket connection
+io.on('connection', (socket) => 
+{  console.log('a user connected');});
 
 io.on('connection', socket => {
     socket.on('join-room', (roomId, userId) => {
@@ -61,6 +76,7 @@ io.on('connection', socket => {
     )
 })
 
+//Connect MongoDB
 
 mongoose.connect("mongodb://localhost:27017/learning-roulette", {
 }).then(()=> console.log("MongoDB Connected"))

@@ -18,14 +18,20 @@
 import axios from 'axios';
 
 //define random UserNames for testing
-const names = ["Chris", "Michelle", "Mark", "Joe", "Sandra"]
+const names = ["Chris", "Michelle", "Mark", "Joey", "Sandra"]
 
 export default {
   
   created() {
     this.joinWaitingRoom();
   },
-
+  /*
+sockets: { 
+        customEmit: function (data) {
+            console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)',data)
+        }
+    },
+    */
   methods: {
     async joinWaitingRoom() {
       try {

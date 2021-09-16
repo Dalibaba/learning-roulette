@@ -16,7 +16,7 @@ const waitingRoom = require('../model/waitingRoom');
 router.post(
     '/waitingroom',
    body('name').isString().isLength({ min: 4, max: 255 }),
-   body('language').isString().isLength({ min: 4, max: 255 }),
+   body('language').isString().isLength({ min: 3, max: 255 }),
     async (request, response) => {
       // Find validation errors and wrap them in an object
      const errors = validationResult(request);
