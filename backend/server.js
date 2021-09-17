@@ -16,7 +16,7 @@ const {v4: uuidV4} = require('uuid')
 //dotenv
 dotenv.config();
 
-//middleware , enable CORS
+//middleware, enable CORS
 app.use(cors());
 app.use(express.json());
 

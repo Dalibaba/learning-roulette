@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-// Child Referencing: the parent references its children.
-
 const WaitingRoomSchema = mongoose.Schema({
   name: {
     type: String,

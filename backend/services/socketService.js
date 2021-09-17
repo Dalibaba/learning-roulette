@@ -3,17 +3,15 @@ const waitingRoom = require('../model/waitingRoom');
 /**
  Listens to connected users in the waitingRoom
  * @param {socketio} io
- * @returns {object#} updated invitation
  */
  function socketListener(io) {
 //Check socket connection
     io.on('connection', (socket) => { 
         console.log('a user connected');
         var username;
-        // Listen for chatMessage
+        // Listen for joining waitingroom
         socket.on('join-waitingroom', async (userinformation) => {
-            console.log("joined waiting room")
-                // save user to waiting Room
+            // save user to waitingroom
             const newUser = new waitingRoom({
                 name: userinformation.name,
                 language: userinformation.language,
@@ -37,6 +35,8 @@ const waitingRoom = require('../model/waitingRoom');
                 console.log(error)
             }
         });
+
+        //TODO delete, if user goes back to main page
     }
     );
 }
