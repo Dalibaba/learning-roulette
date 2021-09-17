@@ -11,7 +11,16 @@ const WaitingRoomSchema = mongoose.Schema({
     type: String,
     required: true,
     enum: ['english', 'spanish'],
-  }
+  },
+  matched: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model(

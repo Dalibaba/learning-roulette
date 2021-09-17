@@ -9,12 +9,14 @@ const waitingRoom = require('../model/waitingRoom');
     io.on('connection', (socket) => { 
         console.log('a user connected');
         var username;
+        var date = Date.now()
         // Listen for joining waitingroom
         socket.on('join-waitingroom', async (userinformation) => {
             // save user to waitingroom
             const newUser = new waitingRoom({
                 name: userinformation.name,
                 language: userinformation.language,
+                date: date
             });
             try {
                 const savedNewUser = await newUser.save();
@@ -37,6 +39,7 @@ const waitingRoom = require('../model/waitingRoom');
         });
 
         //TODO delete, if user goes back to main page
+        //TODO delete from waiting room automatically if more than 10 Minutes passed
     }
     );
 }

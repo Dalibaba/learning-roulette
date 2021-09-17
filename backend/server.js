@@ -32,7 +32,27 @@ const io = socketio(server, {
 socketService.socketListener(io);
 //view engine
 app.set('view engine', 'ejs')
-//set up static folder
+
+//Connect MongoDB
+
+mongoose.connect("mongodb://localhost:27017/learning-roulette", {
+}).then(()=> console.log("MongoDB Connected"))
+.catch((err => console.log(err)));
+
+const db = mongoose.connection;
+
+db.once('open', () => {
+    /* eslint-disable-next-line */
+    console.log('Successfully connected to database!');
+  });
+
+// Start server
+server.listen(process.env.SERVER_PORT, () => {
+    console.log(`API server running on port ${process.env.SERVER_PORT}`);
+  });
+
+  /*
+  //set up static folder
 app.use(express.static('public'))
 
 //create new room
@@ -64,21 +84,4 @@ io.on('connection', socket => {
     }
     )
 })
-
-//Connect MongoDB
-
-mongoose.connect("mongodb://localhost:27017/learning-roulette", {
-}).then(()=> console.log("MongoDB Connected"))
-.catch((err => console.log(err)));
-
-const db = mongoose.connection;
-
-db.once('open', () => {
-    /* eslint-disable-next-line */
-    console.log('Successfully connected to database!');
-  });
-
-// Start server
-server.listen(process.env.SERVER_PORT, () => {
-    console.log(`API server running on port ${process.env.SERVER_PORT}`);
-  });
+*/
