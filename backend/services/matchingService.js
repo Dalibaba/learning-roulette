@@ -5,33 +5,26 @@ const waitingRoom = require('../model/waitingRoom');
 /**
  * checks if more than 2 users are present in the waitingroom and starts matching
  */
-function checkWaitingRoom() {
-
+async function checkWaitingRoom() {
     try {
-        const usersInWaitingRoom = await waitingRoom.find({
-        language: language,
-        });
-        return usersInWaitingRoom;
+        const usersInWaitingRoom = await waitingRoom.find();
+        return usersInWaitingRoom.length;
     } catch (error) {
         return error;
     }
-
 }
 
 /**
  * match two users from the database from the waitingroom
  */
-function matchLearningPartners(language) {
+async function matchLearningPartners(language) {
 
-    try {
-        const usersInWaitingRoom = await waitingRoom.find({
-        language: language,
-        });
-        return usersInWaitingRoom;
-    } catch (error) {
-        return error;
-    }
+    console.log("start matching");
 
 }
-    
+ 
+module.exports = {
+    checkWaitingRoom,
+    matchLearningPartners
+  };
 

@@ -1,5 +1,5 @@
 const waitingRoom = require('../model/waitingRoom');
-
+const matchingService = require('./matchingService');
 /**
  Listens to connected users in the waitingRoom
  * @param {socketio} io
@@ -22,10 +22,17 @@ const waitingRoom = require('../model/waitingRoom');
                 const savedNewUser = await newUser.save();
                 username = savedNewUser.name
                 console.log("user saved!", savedNewUser.name);
+                
             } catch (error) {
                 console.log(error)
+                // TODO redirect to main page, problem on our side
             }
-
+            // get amount of waiting users in waiting room
+            var amountOfWaitingUsers = await matchingService.checkWaitingRoom(); 
+            if (amountOfWaitingUsers > 2) {
+                matchingService.matchLearningPartners()
+            }
+              
         });
         socket.on('disconnect', async () => {
             try {
