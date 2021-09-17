@@ -5,15 +5,11 @@ const http = require('http')
 const app = express()
 const cors = require('cors');
 const socketio = require("socket.io");
-
+// Import socket.io services
+const socketService =  require('./services/socketService');
 
 //create http server based on express server
 const server = http.createServer(app);
-
-// Import routes
-//import rouletteRoute from './route/roulette';
-const waitingRoomRoute = require('./route/waitingRoom')
-
 // create individual uuid
 const {v4: uuidV4} = require('uuid')
 
@@ -32,15 +28,12 @@ const io = socketio(server, {
       credentials: true
   },
 });
-
+// implement socket listener
+socketService.socketListener(io);
 //view engine
 app.set('view engine', 'ejs')
 //set up static folder
 app.use(express.static('public'))
-
-// define routes
-app.use('/api/v1', waitingRoomRoute);
-
 
 //create new room
 app.get('/', (req, res) => {
@@ -53,10 +46,6 @@ app.get('/:room', (req, res) => {
     res.render('room', {roomId: req.params.room})
 }
 )
-
-//Check socket connection
-io.on('connection', (socket) => 
-{  console.log('a user connected');});
 
 io.on('connection', socket => {
     socket.on('join-room', (roomId, userId) => {

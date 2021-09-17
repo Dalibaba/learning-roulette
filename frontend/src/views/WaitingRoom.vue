@@ -25,13 +25,13 @@ export default {
   created() {
     this.joinWaitingRoom();
   },
-  /*
+  
 sockets: { 
         customEmit: function (data) {
             console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)',data)
         }
     },
-    */
+    
   methods: {
     async joinWaitingRoom() {
       try {
@@ -41,7 +41,8 @@ sockets: {
         });
       } catch (error) {
         console.log(error)
-      }
+      } 
+      this.$socket.emit('join-waitingroom', {"language": this.$route.query.language, "name": names[this.getRandomInt(0, names.length-1)]})
     },
   
  getRandomInt(min, max) {
