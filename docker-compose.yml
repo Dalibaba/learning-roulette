@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - ./var/database:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=app
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/dockerfile
+    ports:
+      - 3000:3000
+    links:
+      - mongo:db
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./frontend:/app

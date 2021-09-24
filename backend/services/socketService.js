@@ -39,7 +39,6 @@ const matchingService = require('./matchingService');
                 const deletedUser = await waitingRoom.findOneAndRemove(
                     { name: username },
                   );
-                console.log("user deleted!", deletedUser);
             } catch (error) {
                 console.log(error)
             }
