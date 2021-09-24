@@ -35,7 +35,7 @@ app.set('view engine', 'ejs')
 
 //Connect MongoDB
 
-mongoose.connect("mongodb://localhost:27017/learning-roulette", {
+mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`, {
 }).then(()=> console.log("MongoDB Connected"))
 .catch((err => console.log(err)));
 
