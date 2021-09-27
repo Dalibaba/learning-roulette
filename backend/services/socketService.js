@@ -18,6 +18,7 @@ const matchingService = require('./matchingService');
                 language: userinformation.language,
                 date: date
             });
+            console.log("waiting roomi joined");
             try {
                 const savedNewUser = await newUser.save();
                 username = savedNewUser.name
